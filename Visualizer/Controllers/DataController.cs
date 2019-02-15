@@ -1,8 +1,11 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PowershellScriptParser;
+using PowershellScriptParser.Core;
+
 
 namespace Visualizer.Controllers
 {
@@ -12,29 +15,40 @@ namespace Visualizer.Controllers
         [HttpGet]
         public async Task<ActionResult<ForceGraphResult>> Data()
         {
-            string filePath = "";
-            PowerShellParser powerShellParser = new PowerShellParser();
-            var functions = await powerShellParser.GetFunctions(filePath);
-            var executions = await powerShellParser.GetFunctionExecutions(filePath, functions);
+            try
+            {
+                string filePath = @"example.ps1";
+                PowerShellParser powerShellParser = new PowerShellParser();
+                var functions = await powerShellParser.GetFunctions(filePath);
+                var executions = await powerShellParser.GetFunctionExecutions(filePath, functions);
 
-            var links = executions.Select(x => new ForceGraphResult.ForceGraphLink
-            {
-                Source = x.ExecutorName ?? "Main",
-                Target = x.FunctionName,
-                Value = 2
-            }).ToList();
-            var nodes = links.SelectMany(x=> new List<string>{x.Source, x.Target}).Distinct().Select(x => new ForceGraphResult.ForceGraphNode
-            {
-                Id = x,
-                Group = x.GetHashCode()
-            });
+                var links = executions.Select(x => new ForceGraphResult.ForceGraphLink
+                {
+                    Source = x.ExecutorName ?? "Main",
+                    Target = x.FunctionName,
+                    Value = 2
+                }).ToList();
+                var nodes = links
+                    .SelectMany(x => new List<string> { x.Source, x.Target })
+                    .Distinct()
+                    .Select(x => new ForceGraphResult.ForceGraphNode
+                    {
+                        Id = x,
+                        Group = x.GetHashCode()
+                    });
 
-            var forceGraphResult = new ForceGraphResult
+                var forceGraphResult = new ForceGraphResult
+                {
+                    Nodes = nodes,
+                    Links = links
+                };
+                return Ok(forceGraphResult);
+            }
+            catch (Exception e)
             {
-                Nodes = nodes,
-                Links = links
-            };
-            return Ok(forceGraphResult);
+                Console.WriteLine(e);
+                return StatusCode((int) HttpStatusCode.InternalServerError, e.Message);
+            }
         }
     }
 

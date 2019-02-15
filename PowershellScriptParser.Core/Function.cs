@@ -1,4 +1,4 @@
-﻿namespace PowershellScriptParser
+﻿namespace PowershellScriptParser.Core
 {
     public class Function
     {

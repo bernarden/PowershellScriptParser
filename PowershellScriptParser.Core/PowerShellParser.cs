@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PowershellScriptParser
+namespace PowershellScriptParser.Core
 {
     public class PowerShellParser
     {
         public async Task<List<Function>> GetFunctions(string filePath)
         {
-            Regex functionNamesRegex =
-                new Regex(
-                    @"Function\s+(?<functionName>[\w-]+)\s*\(?\s*\)?\s*(?<openingBracket>{)?\s*(?<closingBracket>})?");
+            Regex functionNamesRegex = new Regex(@"function\s+(?<functionName>[\w-]+)\s*\(?\s*\)?\s*(?<openingBracket>{)?\s*(?<closingBracket>})?", RegexOptions.IgnoreCase);
             List<Function> functions = new List<Function>();
             using (StreamReader streamReader = new StreamReader(filePath))
             {
@@ -118,7 +116,7 @@ namespace PowershellScriptParser
                 {
                     line = line.Trim();
 
-                    if (line == string.Empty || line.StartsWith('#') || line.StartsWith("<#"))
+                    if (line == string.Empty || line.StartsWith("#") || line.StartsWith("<#"))
                     {
                         line = await streamReader.ReadLineAsync();
                         lineCount++;
