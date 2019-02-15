@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PowershellScriptParser;
 
 namespace Visualizer.Controllers
 {
@@ -7,33 +10,31 @@ namespace Visualizer.Controllers
     public class DataController : Controller
     {
         [HttpGet]
-        public ActionResult<ForceGraphResult> Data()
+        public async Task<ActionResult<ForceGraphResult>> Data()
         {
-            return Ok(new ForceGraphResult
+            string filePath = "";
+            PowerShellParser powerShellParser = new PowerShellParser();
+            var functions = await powerShellParser.GetFunctions(filePath);
+            var executions = await powerShellParser.GetFunctionExecutions(filePath, functions);
+
+            var links = executions.Select(x => new ForceGraphResult.ForceGraphLink
             {
-                Nodes = new List<ForceGraphResult.ForceGraphNode>
-                {
-                    new ForceGraphResult.ForceGraphNode
-                    {
-                        Group = 1,
-                        Id = "A"
-                    },
-                    new ForceGraphResult.ForceGraphNode
-                    {
-                        Group = 2,
-                        Id = "B"
-                    }
-                },
-                Links = new List<ForceGraphResult.ForceGraphLink>
-                {
-                    new ForceGraphResult.ForceGraphLink()
-                    {
-                        Source = "A",
-                        Target = "B",
-                        Value = 2
-                    }
-                }
+                Source = x.ExecutorName ?? "Main",
+                Target = x.FunctionName,
+                Value = 2
+            }).ToList();
+            var nodes = links.SelectMany(x=> new List<string>{x.Source, x.Target}).Distinct().Select(x => new ForceGraphResult.ForceGraphNode
+            {
+                Id = x,
+                Group = x.GetHashCode()
             });
+
+            var forceGraphResult = new ForceGraphResult
+            {
+                Nodes = nodes,
+                Links = links
+            };
+            return Ok(forceGraphResult);
         }
     }
 
@@ -42,7 +43,7 @@ namespace Visualizer.Controllers
         public class ForceGraphNode
         {
             public string Id { get; set; }
-            public int Group { get;set; }
+            public int Group { get; set; }
         }
 
         public class ForceGraphLink
@@ -52,7 +53,7 @@ namespace Visualizer.Controllers
             public int Value { get; set; }
         }
 
-        public IEnumerable<ForceGraphLink> Links { get;set; }
-        public IEnumerable<ForceGraphNode> Nodes { get;set; }
+        public IEnumerable<ForceGraphLink> Links { get; set; }
+        public IEnumerable<ForceGraphNode> Nodes { get; set; }
     }
 }
