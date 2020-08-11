@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PowershellScriptParser.Core;
 
-
-namespace Visualizer.Controllers
+namespace PowershellScriptParser.Visualizer.Controllers
 {
     [Route("api/[controller]")]
     public class DataController : Controller
