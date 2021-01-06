@@ -30,11 +30,6 @@ namespace PowershellScriptParser.Core
                             Name = match.Groups["functionName"].Value,
                         };
 
-                        if (newFunction.Name == "Get-HasCompanyName")
-                        {
-                            int x = 0;
-                        }
-
                         if (match.Groups["openingBracket"].Success && match.Groups["closingBracket"].Success)
                         {
                             newFunction.EndLine = lineCount;
