@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace PowershellScriptParser.Visualizer
+namespace PowerShellScriptParser.Visualizer
 {
     public class Program
     {

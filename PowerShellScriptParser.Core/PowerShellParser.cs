@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace PowershellScriptParser.Core
+namespace PowerShellScriptParser.Core
 {
     public class PowerShellParser
     {

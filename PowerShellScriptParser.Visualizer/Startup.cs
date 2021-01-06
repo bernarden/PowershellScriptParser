@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace PowershellScriptParser.Visualizer
+namespace PowerShellScriptParser.Visualizer
 {
     public class Startup
     {

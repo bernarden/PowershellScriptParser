@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30330.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowershellScriptParser.Visualizer", "PowershellScriptParser.Visualizer\PowershellScriptParser.Visualizer.csproj", "{26420A63-DF42-4805-BEA5-4B7D37EC7878}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerShellScriptParser.Visualizer", "PowerShellScriptParser.Visualizer\PowerShellScriptParser.Visualizer.csproj", "{26420A63-DF42-4805-BEA5-4B7D37EC7878}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowershellScriptParser.Core", "PowershellScriptParser.Core\PowershellScriptParser.Core.csproj", "{DC0BEAFB-CE1B-4546-A468-E218B3C80023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PowerShellScriptParser.Core", "PowerShellScriptParser.Core\PowerShellScriptParser.Core.csproj", "{DC0BEAFB-CE1B-4546-A468-E218B3C80023}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

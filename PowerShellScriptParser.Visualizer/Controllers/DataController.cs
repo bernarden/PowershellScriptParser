@@ -4,9 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PowershellScriptParser.Core;
+using PowerShellScriptParser.Core;
 
-namespace PowershellScriptParser.Visualizer.Controllers
+namespace PowerShellScriptParser.Visualizer.Controllers
 {
     [Route("api/[controller]")]
     public class DataController : Controller
